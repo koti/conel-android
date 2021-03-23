@@ -12,22 +12,17 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity android:name=".Login"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
 
-=======
-        <activity android:name=".Login" >
-            android:theme="@style/Theme.Design.Light.NoActionBar">
+        <activity android:name=".Login">
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
->>>>>>> bb00466e3a50b5ceea20fe06b011fb065bb6d0ad
-        <activity android:name=".Register"
-            android:theme="@style/Theme.Design.Light.NoActionBar">
+        <activity android:name=".Register">
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,6 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
     </application>
 
 </manifest>
