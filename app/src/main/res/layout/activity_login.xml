@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:hint="@string/Email"
+            android:hint="@string/email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,10 +46,9 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_user"
+                android:drawableRight="@drawable/ic_user"
                 android:fontFamily="@font/poppinsmedium"
-                tools:targetApi="jelly_bean"
-                android:drawableRight="@drawable/ic_user" />
+                tools:targetApi="jelly_bean" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -66,10 +65,10 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android: ="@drawable/ic_pass"
+                android:drawableRight="@drawable/ic_user"
                 android:fontFamily="@font/poppinsmedium"
                 tools:targetApi="jelly_bean"
-                android:drawableRight="@drawable/ic_pass" />
+                android:drawableEnd="@drawable/ic_pass" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ProgressBar
