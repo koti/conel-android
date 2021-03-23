@@ -2,9 +2,6 @@
     <string name="app_name">CONELSHOP</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
     <string name="login">Login</string>
     <string name="signup">SignUp</string>
     <string name="fullname">Fullname</string>
