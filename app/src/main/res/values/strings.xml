@@ -5,7 +5,11 @@
     <string name="login">Login</string>
     <string name="signup">SignUp</string>
     <string name="fullname">Fullname</string>
-    <string name="Email">Email</string>
+    <string name="email">Email</string>
     <string name="loginhere">Already have an account? <u>Login</u></string>
     <string name="signuphere">Create a new account? SignUp</string>
+    <string name="lastname">Last name</string>
+    <string name="sign_up">Sign up</string>
+    <string name="firstname">First Name</string>
+
 </resources>
