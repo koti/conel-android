@@ -79,7 +79,7 @@ public class Register extends AppCompatActivity {
                             data[3] = password;
 
 
-                            PutData putData = new PutData("http://192.168.0.8/AndroidAppDatabaseConnection/signup.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.1.15/AndroidAppDatabaseConnection/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);
