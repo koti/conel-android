@@ -18,7 +18,7 @@ public class Login extends AppCompatActivity {
 
     TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
     Button buttonLogin;
-    TextView textViewSignUp;
+    TextView textViewSignUp, textViewForgotPassword;
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
 
         textViewSignUp = findViewById(R.id.signUpText);
+        textViewForgotPassword=findViewById(R.id.textView2);
 
         progressBar = findViewById(R.id.progress);
 
@@ -41,6 +42,17 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         });
+
+        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ForgotPassword.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -60,7 +72,9 @@ public class Login extends AppCompatActivity {
                             String[] data = new String[2];
                             data[0] = email;
                             data[1] = password;
+
                             PutData putData = new PutData("http://192.168.0.9/AndroidAppDatabaseConnection/login.php", "POST", field, data);
+
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);

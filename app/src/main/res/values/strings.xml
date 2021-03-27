@@ -11,6 +11,16 @@
     <string name="lastname">Last name</string>
     <string name="sign_up">Sign up</string>
     <string name="firstname">First Name</string>
+
     <string name="create_account">CREATE ACCOUNT</string>
+
+    <string name="forgot_password"> <u>Forgot Password?</u></string>
+    <string name="forgot_passwordhere">Forgot Password?</string>
+    <string name="send_reset_email">send reset email</string>
+    <string name="change_password">Change Password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="submit">Submit</string>
+
 
 </resources>
