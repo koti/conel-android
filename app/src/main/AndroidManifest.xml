@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".CreateNewPassword"></activity>
+
         <activity android:name=".ForgotPassword" />
         <activity android:name=".Login">
             <intent-filter>
