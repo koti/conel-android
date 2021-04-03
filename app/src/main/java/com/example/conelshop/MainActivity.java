@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case R.id.nav_favorites:
-                            selectedFragment = new FavoritesFragment();
+                            selectedFragment = new CategoryFragment();
                             break;
 
                         case R.id.nav_cart:
