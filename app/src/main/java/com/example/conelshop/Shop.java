@@ -1,23 +1,21 @@
 package com.example.conelshop;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -26,7 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class Shop extends AppCompatActivity {
 
     private static final String PRODUCT_URL = "http://192.168.1.15/AndroidAppDatabaseConnection/products.php";
 
@@ -35,7 +33,6 @@ public class HomeFragment extends Fragment {
     private ArrayList<Product> productList;
     private RequestQueue mRequestQueue;
 
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -43,11 +40,11 @@ public class HomeFragment extends Fragment {
 
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         productList = new ArrayList<>();
 
-        mRequestQueue = Volley.newRequestQueue(getActivity());
+        mRequestQueue = Volley.newRequestQueue(this);
         parseJson();
 
 
@@ -77,7 +74,7 @@ public class HomeFragment extends Fragment {
                         productList.add(product);
                     }
 
-                    adapter = new ProductAdapter(getActivity(), productList);
+                    adapter = new ProductAdapter(Shop.this, productList);
                     mRecyclerView.setAdapter(adapter);
 
                 } catch (JSONException e) {

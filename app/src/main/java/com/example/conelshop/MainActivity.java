@@ -2,49 +2,168 @@ package com.example.conelshop;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.View;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    DrawerLayout drawerLayout;
+    private static final String PRODUCT_URL = "http://192.168.1.15/AndroidAppDatabaseConnection/products.php";
+
+    RecyclerView mRecyclerView;
+    private ProductAdapter adapter;
+    private ArrayList<Product> productList;
+    private RequestQueue mRequestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNav = findViewById(R.id.botton_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        productList = new ArrayList<>();
+
+        mRequestQueue = Volley.newRequestQueue(this);
+        parseJson();
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
+    private void parseJson() {
+        String url = "http://192.168.1.15/AndroidAppDatabaseConnection/products.php";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray products = response.getJSONArray("products");
+                    productList = new ArrayList<>();
 
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
-                            break;
+                    for(int i = 0; i < products.length(); i++) {
+                        JSONObject productObject = products.getJSONObject(i);
 
-                        case R.id.nav_favorites:
-                            selectedFragment = new CategoryFragment();
-                            break;
+                        int productID = productObject.getInt("product_id");
+                        String name = productObject.getString("name");
+                        String description = productObject.getString("description");
+                        String photo = productObject.getString("photo");
+                        double price = productObject.getDouble("price");
 
-                        case R.id.nav_cart:
-                            selectedFragment = new CartFragment();
-                            break;
+                        Product product = new Product(productID, name, description, photo, price);
+                        productList.add(product);
                     }
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                    adapter = new ProductAdapter(MainActivity.this, productList);
+                    mRecyclerView.setAdapter(adapter);
 
-                    return true;
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            };
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mRequestQueue.add(request);
+    }
+
+    public void ClickMenu(View view) {
+        openDrawer(drawerLayout);
+    }
+
+    private static void openDrawer(DrawerLayout drawerLayout) {
+
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public void ClickLogo(View view) {
+        closeDrawer(drawerLayout);
+    }
+
+    private static void closeDrawer(DrawerLayout drawerLayout) {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void ClickHome(View view) {
+        recreate();
+    }
+
+    public void ClickShop(View view) {
+        redirectActivity(this, Shop.class);
+    }
+
+    public void ClickFavorites(View view) {
+        redirectActivity(this, Favorites.class);
+    }
+
+    public void ClickCart(View view) {
+        redirectActivity(this, Cart.class);
+    }
+
+    public void ClickLogout(View view) {
+        logout(this);
+    }
+
+    private static void logout(final Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Logout");
+        builder.setMessage("Are you sure you want to logout?");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                activity.finishAffinity();
+                System.exit(0);
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.show();
+    }
+    private static void redirectActivity(Activity activity, Class aClass) {
+        Intent intent = new Intent(activity, aClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        closeDrawer(drawerLayout);
+    }
 }

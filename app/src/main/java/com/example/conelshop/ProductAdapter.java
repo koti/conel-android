@@ -20,7 +20,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Context mContext;
     private ArrayList<Product> mProducts;
 
-    public ProductAdapter(FragmentActivity context, ArrayList<Product> products) {
+    public ProductAdapter(Context context, ArrayList<Product> products) {
         mContext = context;
         mProducts = products;
     }
