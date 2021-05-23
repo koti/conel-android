@@ -11,8 +11,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
 
@@ -30,27 +36,8 @@ public class Login extends AppCompatActivity {
 
         buttonLogin = findViewById(R.id.buttonLogin);
 
-        textViewSignUp = findViewById(R.id.signUpText);
-        textViewForgotPassword=findViewById(R.id.textView2);
 
         progressBar = findViewById(R.id.progress);
-
-        textViewSignUp.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Register.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ForgotPassword.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
 
 
@@ -82,6 +69,7 @@ public class Login extends AppCompatActivity {
                                     if(result.equals("Login Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.putExtra("user", email);
                                         startActivity(intent);
                                         finish();
                                     } else {

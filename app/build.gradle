@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -39,4 +40,5 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
 }

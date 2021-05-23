@@ -35,6 +35,32 @@
             android:gravity="center"
             android:textAlignment="center"
             android:text="Price"/>
+
+
+        <Button
+            android:id="@+id/add_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Add To Cart"
+            android:background="#B4A343"
+            android:padding="20dp" />
+
+
+
+        <Button
+            android:id="@+id/remove_wishlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Remove from wishlist"
+            android:background="#B4A343"
+            android:layout_marginTop="5dp"
+            android:padding="20dp" />
+
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+

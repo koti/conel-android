@@ -28,8 +28,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProductAdapter.OnItemClickListener {
 
+    public static final String EXTRA_EMAIL = "email";
+    public static final String EXTRA_ID = "product_id";
+    public static final String EXTRA_URL = "imageUrl";
+    public static final String EXTRA_NAME = "name";
+    public static final String EXTRA_PRICE = "price";
+    public static final String EXTRA_DESCRIPTION = "description";
     DrawerLayout drawerLayout;
     private static final String PRODUCT_URL = "http://192.168.1.15/AndroidAppDatabaseConnection/products.php";
 
@@ -45,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
+        Intent intent = getIntent();
+
+        String email = intent.getStringExtra("user");
+
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -54,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         mRequestQueue = Volley.newRequestQueue(this);
         parseJson();
     }
+
+
 
     private void parseJson() {
         String url = "http://192.168.1.15/AndroidAppDatabaseConnection/products.php";
@@ -79,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                     adapter = new ProductAdapter(MainActivity.this, productList);
                     mRecyclerView.setAdapter(adapter);
+                    adapter.setOnItemClickListener(MainActivity.this);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -118,9 +131,6 @@ public class MainActivity extends AppCompatActivity {
         recreate();
     }
 
-    public void ClickShop(View view) {
-        redirectActivity(this, Shop.class);
-    }
 
     public void ClickFavorites(View view) {
         redirectActivity(this, Favorites.class);
@@ -155,8 +165,10 @@ public class MainActivity extends AppCompatActivity {
 
         builder.show();
     }
-    private static void redirectActivity(Activity activity, Class aClass) {
+    private void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
+        String email = getIntent().getStringExtra("user");
+        intent.putExtra("user", email);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
     }
@@ -165,5 +177,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent detailIntent = new Intent(this, ProductDetailActivity.class);
+
+        Product clickedItem = productList.get(position);
+        String email = getIntent().getStringExtra("user");
+        detailIntent.putExtra("user", email);
+        detailIntent.putExtra(EXTRA_ID, clickedItem.getProductID());
+        detailIntent.putExtra(EXTRA_URL, clickedItem.getPhoto());
+        detailIntent.putExtra(EXTRA_NAME, clickedItem.getName());
+        detailIntent.putExtra(EXTRA_PRICE, clickedItem.getPrice());
+        detailIntent.putExtra(EXTRA_DESCRIPTION, clickedItem.getDescription());
+
+        startActivity(detailIntent);
     }
 }
